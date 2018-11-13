@@ -1,0 +1,9 @@
+flask
+celery[redis]
+flask-restplus
+flask-mongoengine
+pipenv
+flask-testing
+flask-script
+marshmallow
+uwsgi

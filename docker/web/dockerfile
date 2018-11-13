@@ -1,0 +1,16 @@
+FROM python:3.6.5
+MAINTAINER john <john@cupist.com>
+
+COPY . ./home
+WORKDIR home
+RUN pip3 install -r app/requirements.txt
+RUN apt-get update && apt-get install -y uwsgi-plugin-python3 \
+    && apt-get install -y uwsgi-plugin-python && apt-get install -y supervisor \
+    && apt-get install -y vim
+
+COPY config/api.conf /etc/supervisor/conf.d/apu.conf
+
+RUN rm /etc/supervisor/supervisord.conf
+COPY ./config/supervisord.conf /etc/supervisor/supervisord.conf
+RUN ["chmod", "+x", "/home/config/run.sh"]
+CMD /home/config/run.sh
